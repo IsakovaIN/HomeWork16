@@ -6,6 +6,8 @@
 int main() {
 	setlocale(LC_ALL, "Russian");
 	int n, m;
+
+
 	//Задача 1. Ср. арифметическое в массиве из 10 чисел и кол-во элементов меньше ср. ариф.
 	std::cout << "Задача 1.\nСреднее арифметическое в массиве.\n";
 	const int size = 10;
@@ -18,12 +20,14 @@ int main() {
 	int counter = 0;
 	for (int i = 0; i < size; i++)
 		sum += arr[i];
-	std::cout << "Ср. арифметич: " << sum / (double)size << std::endl;
+	double mean_arr = sum / (double)size; // для того, чтобы сократить кол-во вычислений
+	std::cout << "Ср. арифметич: " << mean_arr << std::endl;
 	for (int i = 0; i < size; i++)
-		if (arr[i] < sum / (double)size)
+		if (arr[i] < mean_arr)
 			counter++;
-	std::cout << "Количество элементов " << counter << " меньше ср арифм: " << sum / (double)size << std::endl;
+	std::cout << "Количество элементов " << counter << " меньше ср арифм: " << mean_arr << std::endl;
 	std::cout << std::endl;
+
 
 	//Задача 2. Сумма двух массивов.
 	std::cout << "Задача 2.Сумма двух массивов.\n";
@@ -55,34 +59,40 @@ int main() {
 		}
 		std::cout << std::endl;
 	}
-	for (int i = 0; i < 5; i++)
-		for (int j = 0; j < 5; j++)
+
+	for (int i = 0; i < rows3; i++) // используем константы для перебора массива
+		for (int j = 0; j < cols3; j++) // используем константы для перебора массива
 			arr3[i][j] = arr1[i][j] + arr2[i][j];
 
 	std::cout << "Сумма двух массивов:\n";
-	for (int i = 0; i < 5; i++)
-		for (int j = 0; j < 5; j++) {
+	for (int i = 0; i < rows3; i++) { // используем константы для перебора массива
+		for (int j = 0; j < cols3; j++) // используем константы для перебора массива
 			std::cout << arr3[i][j] << '\t';
-			if (j == 5 - 1)
-				std::cout << std::endl;
-		}
+		std::cout << std::endl; // перенос строки без условий
+	}
 	std::cout << std::endl;
 
+
 	//Задача 3.Шестизначное число.
-	std::cout << "Введите шестизначное число -> ";
+	std::cout << "Задача 3.\nВведите шестизначное число -> ";
 	std::cin >> n;
-	int arr4[6];
+	const int size4 = 6; // вводим константу для хранения длины массива
+	int arr4[size4];
 	
-	if (n < 99999 && n > 999999)//блок не дает вывести больше размера массива = 100 000.
-		std::cout << "Ошибка! Введите шестизначное число -> \n";
-		else
-		std::cout << "\nИтоговый массив:\n{ ";
-	for (int i = 0; i < 6; i++) {
-		arr4[i] = n % 10;
-		n /= 10;
-		std::cout << arr4[i] << ", ";
+	if (n < 100000 || n > 999999) // проверка на ввод шестизначного числа
+		std::cout << "Ошибка! Вводить нужно шестизначное число.\n";
+	else {
+		for (int i = size4 - 1; i >= 0; i--) { // заполняем массив числами в обратном порядке
+			arr4[i] = n % 10;
+			n /= 10;
+		}
+
+		std::cout << "Итоговый массив:\n{ ";
+		for (int i = 0; i < size4; i++)
+			std::cout << arr4[i] << ", ";
+		std::cout << "\b\b }" << std::endl;
 	}
-	std::cout << "\b\b" << " }. " << std::endl;
+
 
 	return 0;
 }
